@@ -7,7 +7,7 @@ export function useTicker(intervalMs: number = 1000) {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      dispatch(tick())
+      dispatch(tick(intervalMs))
     }, intervalMs)
     return () => clearInterval(intervalId)
   }, [])

@@ -15,7 +15,7 @@ import {
 import { useAppSelector, useAppDispatch } from "@/app/hooks"
 import { selectAllTimers, selectTimersStatus } from "@/features/timers/slice"
 import { fetchTimers, createTimer } from "@/features/timers/thunks"
-import Timer from "@/features/timer/Timer"
+import LocalTimer from "@/features/timer/LocalTimer"
 import ServerTimer from "../timer/ServerTimer"
 
 const columns = [
@@ -78,7 +78,7 @@ export const Timers = () => {
           <TableRow key="local">
             <TableCell>local</TableCell>
             <TableCell>
-              <Timer />
+              <LocalTimer />
             </TableCell>
             <TableCell>
               <Button>reset</Button>
