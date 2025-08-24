@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
   FluentProvider,
   webLightTheme,
@@ -13,6 +14,7 @@ import {
 } from "@fluentui/react-icons"
 import type { Theme } from "@fluentui/react-components"
 import { useAppSelector } from "@/app/hooks"
+import type { SelectTabData, SelectTabEvent } from "@fluentui/react-components"
 import { Timers } from "@/features/timers/Timers"
 import { Settings } from "@/features/settings/Settings"
 import { selectTabsView, selectTheme } from "@/features/settings/slice"
@@ -38,6 +40,12 @@ export const App = () => {
   const tabsView = useAppSelector(selectTabsView)
   const theme: string = useAppSelector(selectTheme)
 
+  const [selectedTab, setSelectedTab] = useState<string>("timers")
+
+  const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
+    setSelectedTab(data.value as string)
+  }
+
   const tabs = [
     { id: "timers", label: "Timers", icon: <TimerIcon />, content: <Timers /> },
     {
@@ -52,7 +60,11 @@ export const App = () => {
     <FluentProvider theme={THEMES[theme]}>
       <div className="App">
         {tabsView ? (
-          <TabsView tabs={tabs} selected={"timers"} />
+          <TabsView
+            tabs={tabs}
+            selected={selectedTab}
+            onTabSelect={onTabSelect}
+          />
         ) : (
           <div>
             <Timers />

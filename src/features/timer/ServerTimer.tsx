@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import { useAppSelector } from "@/app/hooks"
 import { selectLocalTimer } from "./slice"
 import { Timer } from "@/features/timers/types"

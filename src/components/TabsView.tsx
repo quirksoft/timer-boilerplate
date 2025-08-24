@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react"
+import type { ReactNode } from "react"
 import { TabList, Tab } from "@fluentui/react-components"
 import type {
   TabSlots,
@@ -16,18 +16,13 @@ type TabConfig = {
 interface TabsViewProps {
   tabs: TabConfig[]
   selected: string
+  onTabSelect: (event: SelectTabEvent, data: SelectTabData) => void
 }
 
-export function TabsView({ tabs, selected }: TabsViewProps) {
-  const [selectedTab, setSelectedTab] = useState<string>(selected)
-
-  const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
-    setSelectedTab(data.value as string)
-  }
-
+export function TabsView({ tabs, selected, onTabSelect }: TabsViewProps) {
   return (
     <>
-      <TabList selectedValue={selectedTab} onTabSelect={onTabSelect}>
+      <TabList selectedValue={selected} onTabSelect={onTabSelect}>
         {tabs.map(({ id, icon, label }) => (
           <Tab key={id} id={id} icon={icon} value={id}>
             {label}
@@ -35,7 +30,7 @@ export function TabsView({ tabs, selected }: TabsViewProps) {
         ))}
       </TabList>
 
-      <div>{tabs.find(tab => tab.id === selectedTab)?.content}</div>
+      <div>{tabs.find(tab => tab.id === selected)?.content}</div>
     </>
   )
 }
