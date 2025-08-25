@@ -1,10 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "@/app/store"
 
+const queryString = window.location.search
+const urlParams = new URLSearchParams(queryString)
+const tabsViewParam = urlParams.get("tabsView")
+const tabsView = !(tabsViewParam === "false")
+
 export const settings = createSlice({
   name: "tabsView",
   initialState: {
-    tabsView: true,
+    tabsView,
     theme: "light",
     preserveLocalTimer: false,
   },

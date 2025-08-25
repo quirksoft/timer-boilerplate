@@ -37,7 +37,7 @@ export const App = () => {
   useGlobalStyles()
   useTicker(250)
 
-  const tabsView = useAppSelector(selectTabsView)
+  const tabsView: boolean = useAppSelector(selectTabsView)
   const theme: string = useAppSelector(selectTheme)
 
   const [selectedTab, setSelectedTab] = useState<string>("timers")
