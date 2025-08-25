@@ -42,7 +42,7 @@ export const App = () => {
 
   const [selectedTab, setSelectedTab] = useState<string>("timers")
 
-  const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
+  const onTabSelect = (_event: SelectTabEvent, data: SelectTabData) => {
     setSelectedTab(data.value as string)
   }
 

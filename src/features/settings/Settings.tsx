@@ -1,10 +1,4 @@
-import {
-  Field,
-  Radio,
-  RadioGroup,
-  Checkbox,
-  Button,
-} from "@fluentui/react-components"
+import { Radio, RadioGroup, Checkbox, Button } from "@fluentui/react-components"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import {
   toggleTabs,
@@ -20,15 +14,15 @@ export const Settings = () => {
 
   return (
     <>
-      <Field label="Theme">
-        <RadioGroup
-          layout="horizontal"
-          onChange={(_, data) => dispatch(setTheme(data.value))}
-        >
-          <Radio value="dark" label="dark" checked={theme === "dark"} />
-          <Radio value="light" label="light" checked={theme === "light"} />
-        </RadioGroup>
-      </Field>
+      <label>Theme</label>
+      <RadioGroup
+        layout="horizontal"
+        onChange={(_, data) => dispatch(setTheme(data.value))}
+        aria-label="theme"
+      >
+        <Radio value="dark" label="dark" checked={theme === "dark"} />
+        <Radio value="light" label="light" checked={theme === "light"} />
+      </RadioGroup>
       <Checkbox
         // checked={checked}
         onChange={() => dispatch(togglePreserveLocalTimer())}
