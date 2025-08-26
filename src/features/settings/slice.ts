@@ -11,7 +11,7 @@ export const settings = createSlice({
   initialState: {
     tabsView,
     theme: "light",
-    preserveLocalTimer: false,
+    preserveLocalTimer: true,
   },
   reducers: {
     toggleTabs: state => {

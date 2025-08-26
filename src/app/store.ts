@@ -2,7 +2,8 @@ import { configureStore } from "@reduxjs/toolkit"
 import settingsReducer from "@/features/settings/slice"
 import timersReducer from "@/features/timers/slice"
 import timerReducer from "@/features/timer/slice"
-import { tabsViewMiddleware } from "@/features/settings/tabsViewMiddleware"
+import { tabsViewMiddleware } from "@/features/settings/middleware"
+import { timerMiddelware } from "@/features/timer/middelware"
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,7 @@ export const store = configureStore({
     timer: timerReducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(tabsViewMiddleware),
+    getDefaultMiddleware().concat(tabsViewMiddleware, timerMiddelware),
 })
 
 // Get the type of our store variable

@@ -4,6 +4,7 @@ import {
   toggleTabs,
   setTheme,
   togglePreserveLocalTimer,
+  selectPreserveLocalTimer,
 } from "@/features/settings/slice"
 import { selectTabsView, selectTheme } from "@/features/settings/slice"
 
@@ -11,6 +12,7 @@ export const Settings = () => {
   const dispatch = useAppDispatch()
   const tabsView = useAppSelector(selectTabsView)
   const theme = useAppSelector(selectTheme)
+  const preserve = useAppSelector(selectPreserveLocalTimer)
 
   return (
     <>
@@ -24,7 +26,7 @@ export const Settings = () => {
         <Radio value="light" label="light" checked={theme === "light"} />
       </RadioGroup>
       <Checkbox
-        // checked={checked}
+        checked={preserve}
         onChange={() => dispatch(togglePreserveLocalTimer())}
         label="Preserve local timer between sessions"
       />

@@ -1,9 +1,11 @@
 import { useAppSelector } from "@/app/hooks"
-import { selectLocalTimer } from "./slice"
+import { selectLocalTimer, selectStart } from "./slice"
 import { formatTime } from "@/helpers.ts/formatTime"
 
 export default function LocalTimer() {
-  const localTimer: number = useAppSelector(selectLocalTimer)
+  useAppSelector(selectLocalTimer)
+  const start = useAppSelector(selectStart)
+  const now = Date.now() / 1000
 
-  return <>{formatTime(localTimer / 1000)}</>
+  return <>{formatTime(now - start)}</>
 }

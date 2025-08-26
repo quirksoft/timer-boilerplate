@@ -1,14 +1,15 @@
 import { useEffect } from "react"
-import { tick } from "@/features/timer/slice"
 import { useAppDispatch } from "@/app/hooks"
+import { startTimer, saveLocalTimerToStorage } from "@/features/timer/slice"
 
-export function useTicker(intervalMs: number = 1000) {
+export function useTimer(frequencyMs: number) {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      dispatch(tick(intervalMs))
-    }, intervalMs)
-    return () => clearInterval(intervalId)
+    dispatch(startTimer(frequencyMs))
+
+    return () => {
+      dispatch(saveLocalTimerToStorage())
+    }
   }, [])
 }
