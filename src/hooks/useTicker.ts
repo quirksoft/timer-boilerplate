@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useAppDispatch } from "@/app/hooks"
-import { startTimer, saveLocalTimerToStorage } from "@/features/timer/slice"
+import { startTimer, stopTimer } from "@/features/timer/slice"
 
 export function useTimer(frequencyMs: number) {
   const dispatch = useAppDispatch()
@@ -9,7 +9,7 @@ export function useTimer(frequencyMs: number) {
     dispatch(startTimer(frequencyMs))
 
     return () => {
-      dispatch(saveLocalTimerToStorage())
+      dispatch(stopTimer())
     }
   }, [])
 }

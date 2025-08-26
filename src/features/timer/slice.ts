@@ -29,6 +29,7 @@ export const timer = createSlice({
 
 export const { tick, startTimer, restoreTimer } = timer.actions
 export const saveLocalTimerToStorage = createAction("timer/saveLocalToStorage")
+export const stopTimer = createAction("timer/stopTimer")
 
 export default timer.reducer
 

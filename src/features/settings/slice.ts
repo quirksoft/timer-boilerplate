@@ -5,13 +5,14 @@ const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)
 const tabsViewParam = urlParams.get("tabsView")
 const tabsView = !(tabsViewParam === "false")
+const localTimer: string | null = localStorage.getItem("localTimer")
 
 export const settings = createSlice({
   name: "tabsView",
   initialState: {
     tabsView,
     theme: "light",
-    preserveLocalTimer: true,
+    preserveLocalTimer: !!localTimer,
   },
   reducers: {
     toggleTabs: state => {

@@ -3,6 +3,7 @@ import {
   startTimer,
   restoreTimer,
   saveLocalTimerToStorage,
+  stopTimer,
 } from "@/features/timer/slice"
 import { tick } from "@/features/timer/slice"
 
@@ -34,9 +35,13 @@ export const timerMiddelware: Middleware = store => {
       if (preserveLocalTimer) {
         localStorage.setItem("localTimer", start)
       }
+    }
 
+    if (stopTimer.match(action)) {
       intervalId !== null && clearInterval(intervalId)
       intervalId = null
+
+      store.dispatch(saveLocalTimerToStorage())
     }
 
     return result
