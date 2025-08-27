@@ -16,6 +16,7 @@ import { selectAllTimers, selectTimersStatus } from "@/features/timers/slice"
 import { fetchTimers, createTimer } from "@/features/timers/thunks"
 import LocalTimer from "@/features/timer/LocalTimer"
 import ServerTimer from "../timer/ServerTimer"
+import { resetTimer } from "../timer/slice"
 
 const columns = [
   { columnKey: "name", label: "Name" },
@@ -58,7 +59,13 @@ export const Timers = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
 
-    dispatch(createTimer(newTimerName))
+    if (newTimerName === "local") {
+      dispatch(resetTimer())
+    } else {
+      dispatch(createTimer(newTimerName))
+    }
+
+    setNewTimerName("")
   }
 
   return (
