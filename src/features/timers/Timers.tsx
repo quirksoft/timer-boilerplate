@@ -75,15 +75,7 @@ export const Timers = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow key="local">
-            <TableCell>local</TableCell>
-            <TableCell>
-              <LocalTimer />
-            </TableCell>
-            <TableCell>
-              <Button>reset</Button>
-            </TableCell>
-          </TableRow>
+          <LocalTimer />
           {timers.map(([id, timer]) => (
             <TableRow key={id}>
               <TableCell>{id}</TableCell>

@@ -4,8 +4,10 @@ import {
   restoreTimer,
   saveLocalTimerToStorage,
   stopTimer,
+  resetTimer,
+  tick,
 } from "@/features/timer/slice"
-import { tick } from "@/features/timer/slice"
+import { FREQUENCY_MS } from "@/app/constants"
 
 export const timerMiddelware: Middleware = store => {
   let intervalId: ReturnType<typeof setTimeout> | null = null
@@ -15,7 +17,7 @@ export const timerMiddelware: Middleware = store => {
     const state = store.getState()
     const { preserveLocalTimer } = state.settings
 
-    if (startTimer.match(action) && intervalId === null) {
+    if (startTimer.match(action)) {
       if (preserveLocalTimer) {
         const localTimer: string | null = localStorage.getItem("localTimer")
 
@@ -24,12 +26,14 @@ export const timerMiddelware: Middleware = store => {
 
       const frequencyMs = action.payload
 
-      intervalId = setInterval(() => {
-        store.dispatch(tick(frequencyMs))
-      }, frequencyMs)
+      if (intervalId === null) {
+        intervalId = setInterval(() => {
+          store.dispatch(tick(frequencyMs || FREQUENCY_MS))
+        }, frequencyMs)
+      }
     }
 
-    if (saveLocalTimerToStorage.match(action)) {
+    if (saveLocalTimerToStorage.match(action) || resetTimer.match(action)) {
       const { start } = state.timer
 
       if (preserveLocalTimer) {

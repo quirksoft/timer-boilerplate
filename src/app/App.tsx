@@ -20,6 +20,7 @@ import { Settings } from "@/features/settings/Settings"
 import { selectTabsView, selectTheme } from "@/features/settings/slice"
 import { TabsView } from "@/components/TabsView"
 import { useTimer } from "@/hooks/useTicker"
+import { FREQUENCY_MS } from "./constants"
 
 const TimerIcon = bundleIcon(TimerFilled, TimerRegular)
 const SettingsIcon = bundleIcon(WrenchSettingsFilled, WrenchSettingsRegular)
@@ -35,7 +36,7 @@ const THEMES: { [key: string]: Theme } = {
 
 export const App = () => {
   useGlobalStyles()
-  useTimer(250)
+  useTimer(FREQUENCY_MS)
 
   const tabsView: boolean = useAppSelector(selectTabsView)
   const theme: string = useAppSelector(selectTheme)

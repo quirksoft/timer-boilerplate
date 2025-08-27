@@ -1,11 +1,26 @@
 import { useAppSelector } from "@/app/hooks"
-import { selectLocalTimer, selectStart } from "./slice"
+import {
+  selectLocalTimer,
+  selectStart,
+  resetTimer,
+} from "@/features/timer/slice"
 import { formatTime } from "@/helpers.ts/formatTime"
+import { TableRow, TableCell, Button } from "@fluentui/react-components"
+import { useAppDispatch } from "@/app/hooks"
 
 export default function LocalTimer() {
   useAppSelector(selectLocalTimer)
   const start = useAppSelector(selectStart)
   const now = Date.now() / 1000
+  const dispatch = useAppDispatch()
 
-  return <>{formatTime(now - start)}</>
+  return (
+    <TableRow key="local">
+      <TableCell>local</TableCell>
+      <TableCell>{formatTime(now - start)}</TableCell>
+      <TableCell>
+        <Button onClick={() => dispatch(resetTimer())}>reset</Button>
+      </TableCell>
+    </TableRow>
+  )
 }

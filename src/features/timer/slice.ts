@@ -18,18 +18,22 @@ export const timer = createSlice({
     tick: (state, action: PayloadAction<number>) => {
       state.localTimer += action.payload
     },
-    startTimer: (state, _action: PayloadAction<number>) => {
+    startTimer: (state, _action: PayloadAction<number | undefined>) => {
       state.start = Date.now() / 1000
     },
     restoreTimer: (state, action: { payload: number }) => {
       state.start = action.payload
     },
+    resetTimer: (state, _action: PayloadAction<number | undefined>) => {
+      state.start = Date.now() / 1000
+    },
   },
 })
 
-export const { tick, startTimer, restoreTimer } = timer.actions
+export const { tick, startTimer, restoreTimer, resetTimer } = timer.actions
 export const saveLocalTimerToStorage = createAction("timer/saveLocalToStorage")
 export const stopTimer = createAction("timer/stopTimer")
+// export const resetTimer = createAction("timer/resetTimer")
 
 export default timer.reducer
 
