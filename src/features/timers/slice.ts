@@ -14,7 +14,7 @@ export const timers = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(fetchTimers.pending, (state, action) => {
+    builder.addCase(fetchTimers.pending, state => {
       state.status = "pending"
     })
     builder.addCase(fetchTimers.fulfilled, (state, action) => {
@@ -31,16 +31,14 @@ export const timers = createSlice({
       state.status = "failed"
       state.error = action.error.message ?? "Unknown Error"
     })
-    builder.addCase(createTimer.pending, (state, action) => {
+    builder.addCase(createTimer.pending, state => {
       state.status = "pending"
     })
     builder.addCase(createTimer.fulfilled, (state, action) => {
-      // TODO
-      // state.status = "succeeded"
-      // state.timers = action.payload
-      // action.payload.forEach(id => {
-      //   dispatch(fetchTimerById(id))
-      // })
+      const { id, elapsed, start, receivedAt } = action.payload
+
+      state.status = "succeeded"
+      state.map[id] = { elapsed, start, receivedAt }
     })
     builder.addCase(createTimer.rejected, (state, action: any) => {
       state.status = "failed"

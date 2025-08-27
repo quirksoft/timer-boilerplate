@@ -1,7 +1,6 @@
 import { useState, useEffect, FormEvent } from "react"
 import {
   TableBody,
-  TableCell,
   TableRow,
   Table,
   TableHeader,
@@ -59,7 +58,7 @@ export const Timers = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
 
-    dispatch(createTimer(newTimerName)).then(() => dispatch(fetchTimers()))
+    dispatch(createTimer(newTimerName))
   }
 
   return (
@@ -77,15 +76,7 @@ export const Timers = () => {
         <TableBody>
           <LocalTimer />
           {timers.map(([id, timer]) => (
-            <TableRow key={id}>
-              <TableCell>{id}</TableCell>
-              <TableCell>
-                <ServerTimer {...timer} />
-              </TableCell>
-              <TableCell>
-                <Button>reset</Button>
-              </TableCell>
-            </TableRow>
+            <ServerTimer key={id} id={id} {...timer} />
           ))}
         </TableBody>
       </Table>

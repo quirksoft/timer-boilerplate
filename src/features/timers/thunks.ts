@@ -42,18 +42,20 @@ export const fetchTimers = createAppAsyncThunk<
   }
 })
 
-export const createTimer = createAppAsyncThunk(
-  "timer/createTimer",
-  async (id: string, { rejectWithValue }) => {
-    try {
-      const response: TimerResponse = await postTimer(id)
+export const createTimer = createAppAsyncThunk<
+  TimerWithId,
+  string,
+  { rejectValue: string }
+>("timer/createTimer", async (id: string, { rejectWithValue }) => {
+  try {
+    const response: TimerResponse = await postTimer(id)
+    const receivedAt = Date.now() / 1000
 
-      return response
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return rejectWithValue(err.message)
-      }
-      return rejectWithValue("Unknown error")
+    return { id, ...response, receivedAt }
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return rejectWithValue(err.message)
     }
-  },
-)
+    return rejectWithValue("Unknown error")
+  }
+})
