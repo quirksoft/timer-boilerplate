@@ -28,13 +28,9 @@ const columns = [
 const useStyles = makeStyles({
   form: {
     display: "flex",
-    flexDirection: "row",
-  },
-  input: {
-    display: "flex",
     flexDirection: "column",
-    gap: "2px",
-    maxWidth: "400px",
+    gap: "5px",
+    padding: "20px 0 0 20px",
   },
 })
 
@@ -71,7 +67,7 @@ export const Timers = () => {
 
   return (
     <>
-      <Table arial-label="Timers table" style={{ minWidth: "510px" }}>
+      <Table arial-label="Timers table" style={{ marginTop: "20px" }}>
         <TableHeader>
           <TableRow>
             {columns.map(column => (
@@ -88,7 +84,7 @@ export const Timers = () => {
           ))}
         </TableBody>
       </Table>
-      <form className={styles.input} onSubmit={onSubmit}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <Label htmlFor={inputId}>New timer</Label>
         <div>
           <Input

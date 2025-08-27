@@ -1,4 +1,10 @@
-import { Radio, RadioGroup, Checkbox, Button } from "@fluentui/react-components"
+import {
+  Radio,
+  RadioGroup,
+  Checkbox,
+  Button,
+  makeStyles,
+} from "@fluentui/react-components"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import {
   toggleTabs,
@@ -8,14 +14,24 @@ import {
 } from "@/features/settings/slice"
 import { selectTabsView, selectTheme } from "@/features/settings/slice"
 
+const useStyles = makeStyles({
+  container: {
+    padding: "20px 0 0 20px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+  },
+})
+
 export const Settings = () => {
+  const styles = useStyles()
   const dispatch = useAppDispatch()
   const tabsView = useAppSelector(selectTabsView)
   const theme = useAppSelector(selectTheme)
   const preserve = useAppSelector(selectPreserveLocalTimer)
 
   return (
-    <>
+    <div className={styles.container}>
       <label>Theme</label>
       <RadioGroup
         layout="horizontal"
@@ -30,10 +46,12 @@ export const Settings = () => {
         onChange={() => dispatch(togglePreserveLocalTimer())}
         label="Preserve local timer between sessions"
       />
-      <br />
-      <Button onClick={() => dispatch(toggleTabs())}>
+      <Button
+        onClick={() => dispatch(toggleTabs())}
+        style={{ alignSelf: "flex-start" }}
+      >
         Switch to {tabsView ? "one" : "tabs"} view
       </Button>
-    </>
+    </div>
   )
 }
