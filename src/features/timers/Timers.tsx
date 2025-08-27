@@ -17,6 +17,7 @@ import { fetchTimers, createTimer } from "@/features/timers/thunks"
 import LocalTimer from "@/features/timer/LocalTimer"
 import ServerTimer from "../timer/ServerTimer"
 import { resetTimer } from "../timer/slice"
+import { LOCAL } from "@/app/constants"
 
 const columns = [
   { columnKey: "name", label: "Name" },
@@ -59,7 +60,7 @@ export const Timers = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
 
-    if (newTimerName === "local") {
+    if (newTimerName === LOCAL) {
       dispatch(resetTimer())
     } else {
       dispatch(createTimer(newTimerName))
@@ -94,8 +95,12 @@ export const Timers = () => {
             id={inputId}
             value={newTimerName}
             onChange={e => setNewTimerName(e.target.value)}
+            title="Enter the name of a new timer"
+            placeholder="Enter the name"
           />
-          <Button type="submit">add</Button>
+          <Button disabled={newTimerName.length === 0} type="submit">
+            add
+          </Button>
         </div>
       </form>
     </>
