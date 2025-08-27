@@ -16,7 +16,7 @@
     "type-check": "tsc -b --noEmit"
   },
   "dependencies": {
-    "@fluentui/react-components": "9.68.2",
+    "@fluentui/react-components": "^9.68.2",
     "@reduxjs/toolkit": "^2.8.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
