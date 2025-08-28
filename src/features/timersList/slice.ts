@@ -12,6 +12,7 @@ const initialState: TimersState = {
     error: null,
   },
   resetTimer: {
+    id: "",
     status: "idle",
     error: null,
   },
@@ -42,8 +43,11 @@ export const timers = createSlice({
       state.fetchTimers.error = action.error.message ?? "Unknown Error"
     })
     builder.addCase(createTimer.pending, (state, action) => {
-      if (action.meta.arg.source === name) {
+      const { source, id } = action.meta.arg
+
+      if (source === name) {
         state.resetTimer.status = "pending"
+        state.resetTimer.id = id
       }
     })
     builder.addCase(createTimer.fulfilled, (state, action) => {
@@ -77,3 +81,7 @@ export const selectTimersError = (state: RootState) =>
   state.timers.fetchTimers.error
 export const selectIsInitialLoading = (state: RootState) =>
   state.timers.isInitialLoading
+
+export const selectResetStatus = (state: RootState) =>
+  state.timers.resetTimer.status
+export const selectResetId = (state: RootState) => state.timers.resetTimer.id

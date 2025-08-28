@@ -19,7 +19,7 @@ interface FetchStatus {
 export interface TimersState {
   map: Record<string, Timer>
   fetchTimers: FetchStatus
-  resetTimer: FetchStatus
+  resetTimer: WithId<FetchStatus>
   isInitialLoading: boolean
 }
 
