@@ -13,6 +13,8 @@ import {
   selectPreserveLocalTimer,
 } from "@/features/settings/slice"
 import { selectTabsView, selectTheme } from "@/features/settings/slice"
+import type { AppTheme } from "@/app/types"
+import { THEME } from "@/app/constants"
 
 const useStyles = makeStyles({
   container: {
@@ -35,11 +37,19 @@ export const Settings = () => {
       <label>Theme</label>
       <RadioGroup
         layout="horizontal"
-        onChange={(_, data) => dispatch(setTheme(data.value))}
+        onChange={(_, data) => dispatch(setTheme(data.value as AppTheme))}
         aria-label="theme"
       >
-        <Radio value="dark" label="dark" checked={theme === "dark"} />
-        <Radio value="light" label="light" checked={theme === "light"} />
+        <Radio
+          value={THEME.dark}
+          label={THEME.dark}
+          checked={theme === THEME.dark}
+        />
+        <Radio
+          value={THEME.light}
+          label={THEME.light}
+          checked={theme === THEME.light}
+        />
       </RadioGroup>
       <Checkbox
         checked={preserve}

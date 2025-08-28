@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "@/app/store"
+import { SettingState } from "./types"
+import type { AppTheme } from "@/app/types"
+import { THEME } from "@/app/constants"
 
 const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)
@@ -7,18 +10,20 @@ const tabsViewParam = urlParams.get("tabsView")
 const tabsView = !(tabsViewParam === "false")
 const localTimer: string | null = localStorage.getItem("localTimer")
 
+const initialState: SettingState = {
+  tabsView,
+  theme: THEME.light,
+  preserveLocalTimer: !!localTimer,
+}
+
 export const settings = createSlice({
   name: "tabsView",
-  initialState: {
-    tabsView,
-    theme: "light",
-    preserveLocalTimer: !!localTimer,
-  },
+  initialState,
   reducers: {
     toggleTabs: state => {
       state.tabsView = !state.tabsView
     },
-    setTheme: (state, action: PayloadAction<string>) => {
+    setTheme: (state, action: PayloadAction<AppTheme>) => {
       state.theme = action.payload
     },
     togglePreserveLocalTimer: state => {

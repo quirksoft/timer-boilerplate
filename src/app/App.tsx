@@ -22,6 +22,7 @@ import { selectTabsView, selectTheme } from "@/features/settings/slice"
 import { TabsView } from "@/components/TabsView"
 import { useTimer } from "@/hooks/useTicker"
 import { FREQUENCY_MS } from "./constants"
+import type { AppTheme } from "./types"
 
 const TimerIcon = bundleIcon(TimerFilled, TimerRegular)
 const SettingsIcon = bundleIcon(WrenchSettingsFilled, WrenchSettingsRegular)
@@ -30,7 +31,7 @@ const useGlobalStyles = makeStaticStyles([
   "html, body, #root, .App { margin: 0; padding: 0; min-height: 100vh; }",
 ])
 
-const THEMES: { [key: string]: Theme } = {
+const THEMES: { [K in AppTheme]: Theme } = {
   dark: webDarkTheme,
   light: webLightTheme,
 }
@@ -40,7 +41,7 @@ export const App = () => {
   useTimer(FREQUENCY_MS)
 
   const tabsView: boolean = useAppSelector(selectTabsView)
-  const theme: string = useAppSelector(selectTheme)
+  const theme: AppTheme = useAppSelector(selectTheme)
 
   const [selectedTab, setSelectedTab] = useState<string>("timers")
 
