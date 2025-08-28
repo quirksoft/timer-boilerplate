@@ -10,6 +10,7 @@ import {
   Button,
   makeStyles,
   useId,
+  Spinner,
 } from "@fluentui/react-components"
 import { useAppSelector, useAppDispatch } from "@/app/hooks"
 import { selectAllTimers, selectTimersStatus } from "@/features/timers/slice"
@@ -26,6 +27,12 @@ const columns = [
 ]
 
 const useStyles = makeStyles({
+  spinnerContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "42px",
+  },
   form: {
     display: "flex",
     flexDirection: "column",
@@ -84,6 +91,9 @@ export const Timers = () => {
           ))}
         </TableBody>
       </Table>
+      <div className={styles.spinnerContainer}>
+        {timersStatus === "idle" && <Spinner label="Loading..." />}
+      </div>
       <form className={styles.form} onSubmit={onSubmit}>
         <Label htmlFor={inputId}>New timer</Label>
         <div>
