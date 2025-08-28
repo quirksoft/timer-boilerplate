@@ -7,6 +7,7 @@ const initialState: TimersState = {
   map: {},
   status: "idle",
   error: null,
+  isInitialLoading: true,
 }
 
 export const timers = createSlice({
@@ -19,6 +20,7 @@ export const timers = createSlice({
     })
     builder.addCase(fetchTimers.fulfilled, (state, action) => {
       state.status = "succeeded"
+      state.isInitialLoading = false
       state.map = action.payload.reduce(
         (acc, { id, start, elapsed, receivedAt }) => {
           acc[id] = { start, elapsed, receivedAt }
@@ -58,3 +60,5 @@ export const selectAllTimers = createSelector(
 )
 export const selectTimersStatus = (state: RootState) => state.timers.status
 export const selectTimersError = (state: RootState) => state.timers.error
+export const selectIsInitialLoading = (state: RootState) =>
+  state.timers.isInitialLoading

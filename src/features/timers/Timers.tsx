@@ -13,7 +13,11 @@ import {
   Spinner,
 } from "@fluentui/react-components"
 import { useAppSelector, useAppDispatch } from "@/app/hooks"
-import { selectAllTimers, selectTimersStatus } from "@/features/timers/slice"
+import {
+  selectAllTimers,
+  selectIsInitialLoading,
+  selectTimersStatus,
+} from "@/features/timers/slice"
 import { fetchTimers, createTimer } from "@/features/timers/thunks"
 import LocalTimer from "@/features/timer/LocalTimer"
 import ServerTimer from "../timer/ServerTimer"
@@ -39,6 +43,9 @@ const useStyles = makeStyles({
     gap: "5px",
     padding: "20px 0 0 20px",
   },
+  input: {
+    marginRight: "10px",
+  },
 })
 
 export const Timers = () => {
@@ -47,6 +54,7 @@ export const Timers = () => {
   const dispatch = useAppDispatch()
   const timers = useAppSelector(selectAllTimers)
   const timersStatus = useAppSelector(selectTimersStatus)
+  const isInitialLoading = useAppSelector(selectIsInitialLoading)
   const [newTimerName, setNewTimerName] = useState<string>("")
 
   useEffect(() => {
@@ -92,21 +100,29 @@ export const Timers = () => {
         </TableBody>
       </Table>
       <div className={styles.spinnerContainer}>
-        {timersStatus === "idle" && <Spinner label="Loading..." />}
+        {timersStatus === "pending" && isInitialLoading && (
+          <Spinner label="Loading..." />
+        )}
       </div>
       <form className={styles.form} onSubmit={onSubmit}>
         <Label htmlFor={inputId}>New timer</Label>
-        <div>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Input
             id={inputId}
+            className={styles.input}
             value={newTimerName}
             onChange={e => setNewTimerName(e.target.value)}
             title="Enter the name of a new timer"
             placeholder="Enter the name"
           />
-          <Button disabled={newTimerName.length === 0} type="submit">
+          <Button
+            appearance="primary"
+            disabled={newTimerName.length === 0}
+            type="submit"
+          >
             add
           </Button>
+          {/* <Spinner size="tiny" style={{ marginLeft: "10px" }} /> */}
         </div>
       </form>
     </>

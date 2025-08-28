@@ -15,4 +15,5 @@ export interface TimersState {
   map: Record<string, Timer>
   status: "idle" | "pending" | "succeeded" | "failed"
   error: string | null
+  isInitialLoading: boolean
 }
