@@ -1,15 +1,11 @@
-import { useState, useEffect, FormEvent } from "react"
+import { useEffect } from "react"
 import {
   TableBody,
   TableRow,
   Table,
   TableHeader,
   TableHeaderCell,
-  Input,
-  Label,
-  Button,
   makeStyles,
-  useId,
   Spinner,
 } from "@fluentui/react-components"
 import { useAppSelector, useAppDispatch } from "@/app/hooks"
@@ -18,11 +14,9 @@ import {
   selectIsInitialLoading,
   selectTimersStatus,
 } from "@/features/timersList/slice"
-import { fetchTimers, createTimer } from "@/features/timersList/thunks"
+import { fetchTimers } from "@/features/timersList/thunks"
 import LocalTimer from "@/features/timer/LocalTimer"
-import ServerTimer from "../timer/ServerTimer"
-import { resetTimer } from "../timer/slice"
-import { LOCAL } from "@/app/constants"
+import ServerTimer from "@/features/timer/ServerTimer"
 
 const columns = [
   { columnKey: "name", label: "Name" },
@@ -37,25 +31,14 @@ const useStyles = makeStyles({
     alignItems: "center",
     minHeight: "42px",
   },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "5px",
-    padding: "20px 0 0 20px",
-  },
-  input: {
-    marginRight: "10px",
-  },
 })
 
 export const TimersList = () => {
-  const inputId = useId("input")
   const styles = useStyles()
   const dispatch = useAppDispatch()
   const timers = useAppSelector(selectAllTimers)
   const timersStatus = useAppSelector(selectTimersStatus)
   const isInitialLoading = useAppSelector(selectIsInitialLoading)
-  const [newTimerName, setNewTimerName] = useState<string>("")
 
   useEffect(() => {
     if (timersStatus === "idle") {
@@ -67,18 +50,6 @@ export const TimersList = () => {
     }, 30000)
     return () => clearInterval(interval)
   }, [])
-
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault()
-
-    if (newTimerName === LOCAL) {
-      dispatch(resetTimer())
-    } else {
-      dispatch(createTimer(newTimerName))
-    }
-
-    setNewTimerName("")
-  }
 
   return (
     <>
@@ -104,27 +75,6 @@ export const TimersList = () => {
           <Spinner label="Loading..." />
         )}
       </div>
-      <form className={styles.form} onSubmit={onSubmit}>
-        <Label htmlFor={inputId}>New timer</Label>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Input
-            id={inputId}
-            className={styles.input}
-            value={newTimerName}
-            onChange={e => setNewTimerName(e.target.value)}
-            title="Enter the name of a new timer"
-            placeholder="Enter the name"
-          />
-          <Button
-            appearance="primary"
-            disabled={newTimerName.length === 0}
-            type="submit"
-          >
-            add
-          </Button>
-          {/* <Spinner size="tiny" style={{ marginLeft: "10px" }} /> */}
-        </div>
-      </form>
     </>
   )
 }

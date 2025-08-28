@@ -16,6 +16,7 @@ import type { Theme } from "@fluentui/react-components"
 import { useAppSelector } from "@/app/hooks"
 import type { SelectTabData, SelectTabEvent } from "@fluentui/react-components"
 import { TimersList } from "@/features/timersList/TimersList"
+import { NewTimerForm } from "@/features/newTimerForm/NewTimerForm"
 import { Settings } from "@/features/settings/Settings"
 import { selectTabsView, selectTheme } from "@/features/settings/slice"
 import { TabsView } from "@/components/TabsView"
@@ -52,7 +53,12 @@ export const App = () => {
       id: "timers",
       label: "Timers",
       icon: <TimerIcon />,
-      content: <TimersList />,
+      content: (
+        <>
+          <TimersList />
+          <NewTimerForm />
+        </>
+      ),
     },
     {
       id: "settings",

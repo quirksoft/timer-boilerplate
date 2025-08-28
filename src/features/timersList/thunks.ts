@@ -1,5 +1,5 @@
 import { createAppAsyncThunk } from "@/app/withTypes"
-import { TimerResponse, TimerWithId } from "./types"
+import { SliceNames, TimerResponse, TimerWithId } from "./types"
 import { getTimer, getListOfTimers, postTimer } from "./api"
 
 export const fetchTimerById = createAppAsyncThunk(
@@ -44,9 +44,9 @@ export const fetchTimers = createAppAsyncThunk<
 
 export const createTimer = createAppAsyncThunk<
   TimerWithId,
-  string,
+  { id: string; source: SliceNames },
   { rejectValue: string }
->("timer/createTimer", async (id: string, { rejectWithValue }) => {
+>("timer/createTimer", async ({ id }, { rejectWithValue }) => {
   try {
     const response: TimerResponse = await postTimer(id)
     const receivedAt = Date.now() / 1000

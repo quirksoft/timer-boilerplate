@@ -3,23 +3,31 @@ import type { RootState } from "@/app/store"
 import { Timer, TimersState } from "./types"
 import { fetchTimers, createTimer } from "./thunks"
 
+export const name = "timersList"
+
 const initialState: TimersState = {
   map: {},
-  status: "idle",
-  error: null,
+  fetchTimers: {
+    status: "idle",
+    error: null,
+  },
+  resetTimer: {
+    status: "idle",
+    error: null,
+  },
   isInitialLoading: true,
 }
 
 export const timers = createSlice({
-  name: "timers",
+  name,
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchTimers.pending, state => {
-      state.status = "pending"
+      state.fetchTimers.status = "pending"
     })
     builder.addCase(fetchTimers.fulfilled, (state, action) => {
-      state.status = "succeeded"
+      state.fetchTimers.status = "succeeded"
       state.isInitialLoading = false
       state.map = action.payload.reduce(
         (acc, { id, start, elapsed, receivedAt }) => {
@@ -30,21 +38,26 @@ export const timers = createSlice({
       )
     })
     builder.addCase(fetchTimers.rejected, (state, action) => {
-      state.status = "failed"
-      state.error = action.error.message ?? "Unknown Error"
+      state.fetchTimers.status = "failed"
+      state.fetchTimers.error = action.error.message ?? "Unknown Error"
     })
-    builder.addCase(createTimer.pending, state => {
-      state.status = "pending"
+    builder.addCase(createTimer.pending, (state, action) => {
+      if (action.meta.arg.source === name) {
+        state.resetTimer.status = "pending"
+      }
     })
     builder.addCase(createTimer.fulfilled, (state, action) => {
       const { id, elapsed, start, receivedAt } = action.payload
-
-      state.status = "succeeded"
+      if (action.meta.arg.source === name) {
+        state.resetTimer.status = "succeeded"
+      }
       state.map[id] = { elapsed, start, receivedAt }
     })
     builder.addCase(createTimer.rejected, (state, action: any) => {
-      state.status = "failed"
-      state.error = action.error.message ?? "Unknown Error"
+      if (action.meta.arg.source === name) {
+        state.resetTimer.status = "failed"
+        state.resetTimer.error = action.error.message ?? "Unknown Error"
+      }
     })
   },
 })
@@ -58,7 +71,9 @@ export const selectAllTimers = createSelector(
   selectTimerMap,
   (map: Record<string, Timer>) => Object.entries(map),
 )
-export const selectTimersStatus = (state: RootState) => state.timers.status
-export const selectTimersError = (state: RootState) => state.timers.error
+export const selectTimersStatus = (state: RootState) =>
+  state.timers.fetchTimers.status
+export const selectTimersError = (state: RootState) =>
+  state.timers.fetchTimers.error
 export const selectIsInitialLoading = (state: RootState) =>
   state.timers.isInitialLoading

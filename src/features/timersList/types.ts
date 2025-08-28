@@ -11,9 +11,16 @@ export interface Timer extends TimerResponse {
 
 export type TimerWithId = WithId<Timer>
 
-export interface TimersState {
-  map: Record<string, Timer>
+interface FetchStatus {
   status: "idle" | "pending" | "succeeded" | "failed"
   error: string | null
+}
+
+export interface TimersState {
+  map: Record<string, Timer>
+  fetchTimers: FetchStatus
+  resetTimer: FetchStatus
   isInitialLoading: boolean
 }
+
+export type SliceNames = "form" | "timersList"
