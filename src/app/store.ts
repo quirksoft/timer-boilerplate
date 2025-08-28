@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import settingsReducer from "@/features/settings/slice"
-import timersReducer from "@/features/timers/slice"
+import timersReducer from "@/features/timersList/slice"
 import timerReducer from "@/features/timer/slice"
 import { tabsViewMiddleware } from "@/features/settings/middleware"
 import { timerMiddelware } from "@/features/timer/middelware"

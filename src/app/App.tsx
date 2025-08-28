@@ -15,7 +15,7 @@ import {
 import type { Theme } from "@fluentui/react-components"
 import { useAppSelector } from "@/app/hooks"
 import type { SelectTabData, SelectTabEvent } from "@fluentui/react-components"
-import { Timers } from "@/features/timers/Timers"
+import { TimersList } from "@/features/timersList/TimersList"
 import { Settings } from "@/features/settings/Settings"
 import { selectTabsView, selectTheme } from "@/features/settings/slice"
 import { TabsView } from "@/components/TabsView"
@@ -48,7 +48,12 @@ export const App = () => {
   }
 
   const tabs = [
-    { id: "timers", label: "Timers", icon: <TimerIcon />, content: <Timers /> },
+    {
+      id: "timers",
+      label: "Timers",
+      icon: <TimerIcon />,
+      content: <TimersList />,
+    },
     {
       id: "settings",
       label: "Settings",
@@ -68,7 +73,7 @@ export const App = () => {
           />
         ) : (
           <div>
-            <Timers />
+            <TimersList />
             <Settings />
           </div>
         )}

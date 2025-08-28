@@ -1,10 +1,10 @@
 import { useAppSelector } from "@/app/hooks"
 import { TableCell, TableRow, Button } from "@fluentui/react-components"
 import { selectLocalTimer } from "./slice"
-import { TimerWithId } from "@/features/timers/types"
+import { TimerWithId } from "@/features/timersList/types"
 import { formatTime } from "@/helpers.ts/formatTime"
 import { useAppDispatch } from "@/app/hooks"
-import { createTimer } from "@/features/timers/thunks"
+import { createTimer } from "@/features/timersList/thunks"
 
 export default function ServerTimer({ id, elapsed, receivedAt }: TimerWithId) {
   useAppSelector(selectLocalTimer)

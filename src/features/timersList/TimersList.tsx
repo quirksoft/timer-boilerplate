@@ -17,8 +17,8 @@ import {
   selectAllTimers,
   selectIsInitialLoading,
   selectTimersStatus,
-} from "@/features/timers/slice"
-import { fetchTimers, createTimer } from "@/features/timers/thunks"
+} from "@/features/timersList/slice"
+import { fetchTimers, createTimer } from "@/features/timersList/thunks"
 import LocalTimer from "@/features/timer/LocalTimer"
 import ServerTimer from "../timer/ServerTimer"
 import { resetTimer } from "../timer/slice"
@@ -48,7 +48,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const Timers = () => {
+export const TimersList = () => {
   const inputId = useId("input")
   const styles = useStyles()
   const dispatch = useAppDispatch()
