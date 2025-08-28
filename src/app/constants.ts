@@ -5,3 +5,10 @@ export enum THEME {
   dark = "dark",
   light = "light",
 }
+
+export enum STATUS {
+  idle = "idle",
+  pending = "pending",
+  succeeded = "succeeded",
+  failed = "failed",
+}

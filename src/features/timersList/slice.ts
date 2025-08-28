@@ -2,18 +2,19 @@ import { createSlice, createSelector } from "@reduxjs/toolkit"
 import type { RootState } from "@/app/store"
 import { Timer, TimersState } from "./types"
 import { fetchTimers, createTimer } from "./thunks"
+import { STATUS } from "@/app/constants"
 
 export const name = "timersList"
 
 const initialState: TimersState = {
   map: {},
   fetchTimers: {
-    status: "idle",
+    status: STATUS.idle,
     error: null,
   },
   resetTimer: {
     id: "",
-    status: "idle",
+    status: STATUS.idle,
     error: null,
   },
   isInitialLoading: true,
@@ -25,10 +26,12 @@ export const timers = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchTimers.pending, state => {
-      state.fetchTimers.status = "pending"
+      state.fetchTimers.status = STATUS.pending
+      state.fetchTimers.error = null
     })
     builder.addCase(fetchTimers.fulfilled, (state, action) => {
-      state.fetchTimers.status = "succeeded"
+      state.fetchTimers.status = STATUS.succeeded
+      state.fetchTimers.error = null
       state.isInitialLoading = false
       state.map = action.payload.reduce(
         (acc, { id, start, elapsed, receivedAt }) => {
@@ -39,27 +42,29 @@ export const timers = createSlice({
       )
     })
     builder.addCase(fetchTimers.rejected, (state, action) => {
-      state.fetchTimers.status = "failed"
+      state.fetchTimers.status = STATUS.failed
       state.fetchTimers.error = action.payload ?? "Unknown Error"
     })
     builder.addCase(createTimer.pending, (state, action) => {
       const { source, id } = action.meta.arg
 
       if (source === name) {
-        state.resetTimer.status = "pending"
+        state.resetTimer.status = STATUS.pending
+        state.resetTimer.error = null
         state.resetTimer.id = id
       }
     })
     builder.addCase(createTimer.fulfilled, (state, action) => {
       const { id, elapsed, start, receivedAt } = action.payload
       if (action.meta.arg.source === name) {
-        state.resetTimer.status = "succeeded"
+        state.resetTimer.status = STATUS.succeeded
+        state.resetTimer.error = null
       }
       state.map[id] = { elapsed, start, receivedAt }
     })
     builder.addCase(createTimer.rejected, (state, action: any) => {
       if (action.meta.arg.source === name) {
-        state.resetTimer.status = "failed"
+        state.resetTimer.status = STATUS.failed
         state.resetTimer.error = action.payload ?? "Unknown Error"
       }
     })

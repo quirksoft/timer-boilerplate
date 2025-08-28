@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { RootState } from "@/app/store"
-import { FormState } from "@/features/newTimerForm/types"
 import { createTimer } from "@/features/timersList/thunks"
+import { STATUS } from "@/app/constants"
+import type { FetchStatus } from "@/app/types"
 
 export const name = "form"
 
-const initialState: FormState = {
-  status: "idle",
+const initialState: FetchStatus = {
+  status: STATUS.idle,
   error: null,
 }
 
@@ -17,17 +18,19 @@ export const form = createSlice({
   extraReducers: builder => {
     builder.addCase(createTimer.pending, (state, action) => {
       if (action.meta.arg.source === name) {
-        state.status = "pending"
+        state.status = STATUS.pending
+        state.error = null
       }
     })
     builder.addCase(createTimer.fulfilled, (state, action) => {
       if (action.meta.arg.source === name) {
-        state.status = "succeeded"
+        state.status = STATUS.succeeded
+        state.error = null
       }
     })
     builder.addCase(createTimer.rejected, (state, action: any) => {
       if (action.meta.arg.source === name) {
-        state.status = "failed"
+        state.status = STATUS.failed
         state.error = action.payload ?? "Unknown Error"
       }
     })

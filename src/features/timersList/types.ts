@@ -1,3 +1,5 @@
+import type { FetchStatus } from "@/app/types"
+
 type WithId<T> = T & { id: string }
 
 export interface TimerResponse {
@@ -10,11 +12,6 @@ export interface Timer extends TimerResponse {
 }
 
 export type TimerWithId = WithId<Timer>
-
-interface FetchStatus {
-  status: "idle" | "pending" | "succeeded" | "failed"
-  error: string | null
-}
 
 export interface TimersState {
   map: Record<string, Timer>
