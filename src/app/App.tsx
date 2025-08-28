@@ -80,6 +80,7 @@ export const App = () => {
         ) : (
           <div>
             <TimersList />
+            <NewTimerForm />
             <Settings />
           </div>
         )}
