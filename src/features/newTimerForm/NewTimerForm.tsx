@@ -10,7 +10,10 @@ import {
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { createTimer } from "@/features/timersList/thunks"
 import { resetTimer } from "@/features/timer/slice"
-import { selectFormStatus } from "@/features/newTimerForm/slice"
+import {
+  selectFormStatus,
+  selectFormError,
+} from "@/features/newTimerForm/slice"
 import { LOCAL } from "@/app/constants"
 import { name } from "@/features/newTimerForm/slice"
 
@@ -31,6 +34,7 @@ export const NewTimerForm = () => {
   const styles = useStyles()
   const dispatch = useAppDispatch()
   const status = useAppSelector(selectFormStatus)
+  const error = useAppSelector(selectFormError)
   const [newTimerName, setNewTimerName] = useState<string>("")
 
   const onSubmit = (e: FormEvent) => {
@@ -66,6 +70,9 @@ export const NewTimerForm = () => {
         </Button>
         {status === "pending" && (
           <Spinner size="tiny" style={{ marginLeft: "10px" }} />
+        )}
+        {status === "failed" && (
+          <span style={{ color: "red", marginLeft: "10px" }}>{error}</span>
         )}
       </div>
     </form>

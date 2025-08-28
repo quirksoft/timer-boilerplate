@@ -11,7 +11,11 @@ import { formatTime } from "@/helpers.ts/formatTime"
 import { useAppDispatch } from "@/app/hooks"
 import { createTimer } from "@/features/timersList/thunks"
 import { name } from "@/features/timersList/slice"
-import { selectResetId, selectResetStatus } from "@/features/timersList/slice"
+import {
+  selectResetId,
+  selectResetStatus,
+  selectResetError,
+} from "@/features/timersList/slice"
 
 export default function ServerTimer({ id, elapsed, receivedAt }: TimerWithId) {
   useAppSelector(selectLocalTimer)
@@ -19,7 +23,10 @@ export default function ServerTimer({ id, elapsed, receivedAt }: TimerWithId) {
   const dispatch = useAppDispatch()
   const resetStatus = useAppSelector(selectResetStatus)
   const resetId = useAppSelector(selectResetId)
-  const isPending = resetStatus === "pending" && id === resetId
+  const isCurrentId = id === resetId
+  const isPending = resetStatus === "pending" && isCurrentId
+  const isFailed = resetStatus === "failed" && isCurrentId
+  const error = useAppSelector(selectResetError)
 
   return (
     <TableRow>
@@ -35,6 +42,9 @@ export default function ServerTimer({ id, elapsed, receivedAt }: TimerWithId) {
           reset
         </Button>
         {isPending && <Spinner size="tiny" style={{ marginLeft: "10px" }} />}
+        {isFailed && (
+          <span style={{ color: "red", marginLeft: "10px" }}>{error}</span>
+        )}
       </TableCell>
     </TableRow>
   )

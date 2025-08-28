@@ -40,7 +40,7 @@ export const timers = createSlice({
     })
     builder.addCase(fetchTimers.rejected, (state, action) => {
       state.fetchTimers.status = "failed"
-      state.fetchTimers.error = action.error.message ?? "Unknown Error"
+      state.fetchTimers.error = action.payload ?? "Unknown Error"
     })
     builder.addCase(createTimer.pending, (state, action) => {
       const { source, id } = action.meta.arg
@@ -60,7 +60,7 @@ export const timers = createSlice({
     builder.addCase(createTimer.rejected, (state, action: any) => {
       if (action.meta.arg.source === name) {
         state.resetTimer.status = "failed"
-        state.resetTimer.error = action.error.message ?? "Unknown Error"
+        state.resetTimer.error = action.payload ?? "Unknown Error"
       }
     })
   },
@@ -82,6 +82,8 @@ export const selectTimersError = (state: RootState) =>
 export const selectIsInitialLoading = (state: RootState) =>
   state.timers.isInitialLoading
 
+export const selectResetError = (state: RootState) =>
+  state.timers.resetTimer.error
 export const selectResetStatus = (state: RootState) =>
   state.timers.resetTimer.status
 export const selectResetId = (state: RootState) => state.timers.resetTimer.id

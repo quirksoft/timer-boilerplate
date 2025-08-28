@@ -28,7 +28,7 @@ export const form = createSlice({
     builder.addCase(createTimer.rejected, (state, action: any) => {
       if (action.meta.arg.source === name) {
         state.status = "failed"
-        state.error = action.error.message ?? "Unknown Error"
+        state.error = action.payload ?? "Unknown Error"
       }
     })
   },

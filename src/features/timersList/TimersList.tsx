@@ -13,6 +13,7 @@ import {
   selectAllTimers,
   selectIsInitialLoading,
   selectTimersStatus,
+  selectTimersError,
 } from "@/features/timersList/slice"
 import { fetchTimers } from "@/features/timersList/thunks"
 import LocalTimer from "@/features/timer/LocalTimer"
@@ -39,6 +40,7 @@ export const TimersList = () => {
   const timers = useAppSelector(selectAllTimers)
   const timersStatus = useAppSelector(selectTimersStatus)
   const isInitialLoading = useAppSelector(selectIsInitialLoading)
+  const error = useAppSelector(selectTimersError)
 
   useEffect(() => {
     if (timersStatus === "idle") {
@@ -73,6 +75,9 @@ export const TimersList = () => {
       <div className={styles.spinnerContainer}>
         {timersStatus === "pending" && isInitialLoading && (
           <Spinner label="Loading..." />
+        )}
+        {timersStatus === "failed" && (
+          <span style={{ color: "red", marginLeft: "10px" }}>{error}</span>
         )}
       </div>
     </>
