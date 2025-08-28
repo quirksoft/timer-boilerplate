@@ -22,7 +22,11 @@ interface TabsViewProps {
 export function TabsView({ tabs, selected, onTabSelect }: TabsViewProps) {
   return (
     <>
-      <TabList selectedValue={selected} onTabSelect={onTabSelect}>
+      <TabList
+        selectedValue={selected}
+        onTabSelect={onTabSelect}
+        style={{ marginBottom: "20px" }}
+      >
         {tabs.map(({ id, icon, label }) => (
           <Tab key={id} id={id} icon={icon} value={id}>
             {label}

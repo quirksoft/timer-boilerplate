@@ -16,7 +16,7 @@ import { selectTabsView, selectTheme } from "@/features/settings/slice"
 
 const useStyles = makeStyles({
   container: {
-    padding: "20px 0 0 20px",
+    margin: "20px 0 0 20px",
     display: "flex",
     flexDirection: "column",
     gap: "10px",

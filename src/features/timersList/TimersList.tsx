@@ -53,7 +53,7 @@ export const TimersList = () => {
 
   return (
     <>
-      <Table arial-label="Timers table" style={{ marginTop: "20px" }}>
+      <Table arial-label="Timers table">
         <TableHeader>
           <TableRow>
             {columns.map(column => (
