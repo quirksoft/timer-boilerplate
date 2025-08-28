@@ -18,6 +18,7 @@ import { fetchTimers } from "@/features/timersList/thunks"
 import LocalTimer from "@/features/timer/LocalTimer"
 import ServerTimer from "@/features/timer/ServerTimer"
 import { ThemeSpinner } from "@/components/ThemeSpinner"
+import { STATUS } from "@/app/constants"
 
 const columns = [
   { columnKey: "name", label: "Name" },
@@ -73,10 +74,10 @@ export const TimersList = () => {
         </TableBody>
       </Table>
       <div className={styles.spinnerContainer}>
-        {timersStatus === "pending" && isInitialLoading && (
+        {timersStatus === STATUS.pending && isInitialLoading && (
           <ThemeSpinner label="Loading..." />
         )}
-        {timersStatus === "failed" && (
+        {timersStatus === STATUS.failed && (
           <span style={{ color: "red", marginLeft: "10px" }}>{error}</span>
         )}
       </div>

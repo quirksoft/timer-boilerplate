@@ -13,7 +13,7 @@ import {
   selectFormStatus,
   selectFormError,
 } from "@/features/newTimerForm/slice"
-import { LOCAL } from "@/app/constants"
+import { LOCAL, STATUS } from "@/app/constants"
 import { name } from "@/features/newTimerForm/slice"
 import { ThemeSpinner } from "@/components/ThemeSpinner"
 
@@ -68,10 +68,10 @@ export const NewTimerForm = () => {
         >
           add
         </Button>
-        {status === "pending" && (
+        {status === STATUS.pending && (
           <ThemeSpinner size="tiny" style={{ marginLeft: "10px" }} />
         )}
-        {status === "failed" && (
+        {status === STATUS.failed && (
           <span style={{ color: "red", marginLeft: "10px" }}>{error}</span>
         )}
       </div>

@@ -12,6 +12,7 @@ import {
   selectResetError,
 } from "@/features/timersList/slice"
 import { ThemeSpinner } from "@/components/ThemeSpinner"
+import { STATUS } from "@/app/constants"
 
 export default function ServerTimer({ id, elapsed, receivedAt }: TimerWithId) {
   useAppSelector(selectLocalTimer)
@@ -20,8 +21,8 @@ export default function ServerTimer({ id, elapsed, receivedAt }: TimerWithId) {
   const resetStatus = useAppSelector(selectResetStatus)
   const resetId = useAppSelector(selectResetId)
   const isCurrentId = id === resetId
-  const isPending = resetStatus === "pending" && isCurrentId
-  const isFailed = resetStatus === "failed" && isCurrentId
+  const isPending = resetStatus === STATUS.pending && isCurrentId
+  const isFailed = resetStatus === STATUS.failed && isCurrentId
   const error = useAppSelector(selectResetError)
 
   return (
