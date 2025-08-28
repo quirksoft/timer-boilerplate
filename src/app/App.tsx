@@ -27,7 +27,7 @@ const TimerIcon = bundleIcon(TimerFilled, TimerRegular)
 const SettingsIcon = bundleIcon(WrenchSettingsFilled, WrenchSettingsRegular)
 
 const useGlobalStyles = makeStaticStyles([
-  "html, body, #root, .App { margin: 0; padding: 0; height: 100vh; }",
+  "html, body, #root, .App { margin: 0; padding: 0; min-height: 100vh; }",
 ])
 
 const THEMES: { [key: string]: Theme } = {
