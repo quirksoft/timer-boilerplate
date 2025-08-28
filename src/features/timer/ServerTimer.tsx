@@ -1,10 +1,5 @@
 import { useAppSelector } from "@/app/hooks"
-import {
-  TableCell,
-  TableRow,
-  Button,
-  Spinner,
-} from "@fluentui/react-components"
+import { TableCell, TableRow, Button } from "@fluentui/react-components"
 import { selectLocalTimer } from "./slice"
 import { TimerWithId } from "@/features/timersList/types"
 import { formatTime } from "@/helpers.ts/formatTime"
@@ -16,6 +11,7 @@ import {
   selectResetStatus,
   selectResetError,
 } from "@/features/timersList/slice"
+import { ThemeSpinner } from "@/components/ThemeSpinner"
 
 export default function ServerTimer({ id, elapsed, receivedAt }: TimerWithId) {
   useAppSelector(selectLocalTimer)
@@ -41,7 +37,9 @@ export default function ServerTimer({ id, elapsed, receivedAt }: TimerWithId) {
         >
           reset
         </Button>
-        {isPending && <Spinner size="tiny" style={{ marginLeft: "10px" }} />}
+        {isPending && (
+          <ThemeSpinner size="tiny" style={{ marginLeft: "10px" }} />
+        )}
         {isFailed && (
           <span style={{ color: "red", marginLeft: "10px" }}>{error}</span>
         )}

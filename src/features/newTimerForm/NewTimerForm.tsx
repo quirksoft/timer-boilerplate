@@ -5,7 +5,6 @@ import {
   Button,
   makeStyles,
   useId,
-  Spinner,
 } from "@fluentui/react-components"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { createTimer } from "@/features/timersList/thunks"
@@ -16,6 +15,7 @@ import {
 } from "@/features/newTimerForm/slice"
 import { LOCAL } from "@/app/constants"
 import { name } from "@/features/newTimerForm/slice"
+import { ThemeSpinner } from "@/components/ThemeSpinner"
 
 const useStyles = makeStyles({
   form: {
@@ -69,7 +69,7 @@ export const NewTimerForm = () => {
           add
         </Button>
         {status === "pending" && (
-          <Spinner size="tiny" style={{ marginLeft: "10px" }} />
+          <ThemeSpinner size="tiny" style={{ marginLeft: "10px" }} />
         )}
         {status === "failed" && (
           <span style={{ color: "red", marginLeft: "10px" }}>{error}</span>
