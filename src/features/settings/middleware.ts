@@ -2,7 +2,7 @@ import { Middleware } from "@reduxjs/toolkit"
 import { toggleTabs, togglePreserveLocalTimer } from "@/features/settings/slice"
 import { saveLocalTimerToStorage } from "../timer/slice"
 
-export const tabsViewMiddleware: Middleware = store => next => action => {
+export const settingsMiddleware: Middleware = store => next => action => {
   const result = next(action)
   const state = store.getState()
 
